@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRUCTURES - BCA 4205/25 Daisy Dhiman</title>
+
+</head>
+<body>
+    <nav>
+        <div><a href="#">C Language Questions</a></div>
+      </nav>
+      
+
+    <div>
+        <a href="../index.html">&larr; Back to Home</a>
+
+        <div>
+            <h1>STRUCTURES</h1>
+
+            <div>
+                <h2>Questions List</h2>
+                <ul>
+                    <li><a href="#q1">1. Create structure of employee which there is emp.ID, name, designation of 50 employees from user, print details in tabular form ?</a></li>
+                    <li><a href="#q2">2. Create structure of employee which there is emp.ID, name, designation of 50 employees from user and print only name of the employee ?</a></li>
+                    <li><a href="#q3">3. Create structure of employee which there is emp.ID, name, designation of 50 employees from user and print name character with emp.ID in tabular form ?</a></li>
+                    <li><a href="#q4">4. Enter student details like roll name, fee, DOB and print all the detail by ascending order of roll number ?</a></li>
+                </ul>
+            </div>
+
+            <div id="q1">
+  <h3>1. Create structure of employee which there is emp.ID, name, designation of 50 employees from user, print details in tabular form</h3>
+  <div >
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// ----------------------------------------------
+
+int verifyempid(char * empid){
+
+    if (strlen(empid)!=4) return 0;
+
+    for (int i=0 ; empid[i]!='\0' ; i++){
+        if (empid[i] &lt; 48 || empid[i] &gt; 57) return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int verifycharformat(char * name){
+    for (int i=0 ; name[i]!='\0' ; i++){
+        if (!((name[i]&gt;=65 &amp;&amp; name[i]&lt;=90) || (name[i]&gt;=97 &amp;&amp; name[i]&lt;=122) || name[i]==32))
+        return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int main(){
+    int size=10;
+    char empidv[51],namev[51],desgv[51];
+
+    struct empdata{
+        char empid[5];
+        char name[51];
+        char desg[17];
+    };  
+
+    struct empdata empdataarr[size];
+    for ( int i=0 ; i &lt; size ; i++){
+
+        printf("Enter the Records of employees :\n");
+        printf("------------------------------------\n");
+
+        printf("Record Number : %d\n",i+1);
+
+    empid:
+
+        printf("Enter the Employee ID (EEEE) :");
+        gets(empidv);   
+        fflush(stdin);
+
+        if (verifyempid(empidv)==0){
+            printf("\nEnter in a Valid Format :\n");
+            goto empid;
+        }
+        strcpy(empdataarr[i].empid, empidv);
+
+    name:
+
+        printf("Enter the Name of Employee (Format Title Case) :");
+        gets(namev);
+        fflush(stdin);
+
+        if (verifycharformat(namev)==0){
+            printf("\n Enter in valid format ! \n");
+            goto name; 
+        }
+        strcpy(empdataarr[i].name, namev);
+
+    desg:
+
+        printf("Enter the Designation (Format Title Case) :");
+        gets(desgv);
+        fflush(stdin);
+
+        if (verifycharformat(desgv)==0){
+            printf("\n Enter in valid format ! \n");
+            goto desg; 
+        }
+        strcpy(empdataarr[i].desg, desgv);
+    }
+
+    printf("\n=== Employee Records ===\n");
+    printf("\n----------------------------------------------------------\n");
+
+    printf("| %-5s | %-5s | %-20s | %-15s |\n", "SrNo", "ID", "Name", "Designation");
+
+    for (int i=0; i&lt;size; i++){
+        printf("| %-5d | %-5s | %-20s | %-15s |\n", i+1, empdataarr[i].empid, empdataarr[i].name, empdataarr[i].desg);
+    }
+
+    printf("----------------------------------------------------------\n");
+
+    return 0;
+}</code></pre>
+  </div>
+  <div >
+    <h4>Output :</h4>
+    <pre><code>PS D:\dx\Coding\C_4205_BCA\source\12_structures&gt; gcc f1.c -o f1; .\f1
+Enter the Records of employees :
+------------------------------------
+Record Number : 1
+Enter the Employee ID (EEEE) :1111
+Enter the Name of Employee (Format Title Case) :Emp1
+
+ Enter in valid format !
+Enter the Name of Employee (Format Title Case) :Emp one 
+Enter the Designation (Format Title Case) :Desg one
+Enter the Records of employees :
+------------------------------------
+Record Number : 2
+Enter the Employee ID (EEEE) :2222
+Enter the Name of Employee (Format Title Case) :Emp two
+Enter the Designation (Format Title Case) :Desg two
+Enter the Records of employees :
+------------------------------------
+Record Number : 3
+Enter the Employee ID (EEEE) :3333
+Enter the Name of Employee (Format Title Case) :Emp theree
+Enter the Designation (Format Title Case) :Desg three
+Enter the Records of employees :
+------------------------------------
+Record Number : 4
+Enter the Employee ID (EEEE) :3dd
+
+Enter in a Valid Format :
+Enter the Employee ID (EEEE) :4444
+Enter the Name of Employee (Format Title Case) :Emp four 
+Enter the Designation (Format Title Case) :Desy Four
+Enter the Records of employees :
+------------------------------------
+Record Number : 5
+Enter the Employee ID (EEEE) :55555
+
+Enter in a Valid Format :
+Enter the Employee ID (EEEE) :5555
+Enter the Name of Employee (Format Title Case) :Emp five
+Enter the Designation (Format Title Case) :Desg five
+Enter the Records of employees :
+------------------------------------
+Record Number : 6
+Enter the Employee ID (EEEE) :6666
+Enter the Name of Employee (Format Title Case) :Emp Six
+Enter the Designation (Format Title Case) :Desg six
+Enter the Records of employees :
+------------------------------------
+Record Number : 7
+Enter the Employee ID (EEEE) :7777
+Enter the Name of Employee (Format Title Case) :Emp seven
+Enter the Designation (Format Title Case) :Desg seven
+Enter the Records of employees :
+------------------------------------
+Record Number : 8
+Enter the Employee ID (EEEE) :8888
+Enter the Name of Employee (Format Title Case) :Emp Eight
+Enter the Designation (Format Title Case) :Desg Eight
+Enter the Records of employees :
+------------------------------------
+Record Number : 9
+Enter the Employee ID (EEEE) :9999
+Enter the Name of Employee (Format Title Case) :Emp nine
+Enter the Designation (Format Title Case) :Desg nine
+Enter the Records of employees :
+------------------------------------
+Record Number : 10
+Enter the Employee ID (EEEE) :0000
+Enter the Name of Employee (Format Title Case) :Emp ten
+Enter the Designation (Format Title Case) :Desg ten
+
+=== Employee Records ===
+
+----------------------------------------------------------
+| SrNo  | ID    | Name                 | Designation     |
+| 1     | 1111  | Emp one              | Desg one        |
+| 2     | 2222  | Emp two              | Desg two        |
+| 3     | 3333  | Emp theree           | Desg three      |
+| 4     | 4444  | Emp four             | Desy Four       |
+| 5     | 5555  | Emp five             | Desg five       |
+| 6     | 6666  | Emp Six              | Desg six        |
+| 7     | 7777  | Emp seven            | Desg seven      |
+| 8     | 8888  | Emp Eight            | Desg Eight      |
+| 9     | 9999  | Emp nine             | Desg nine       |
+| 10    | 0000  | Emp ten              | Desg ten        |
+----------------------------------------------------------</code></pre>
+  </div>
+</div>
+
+
+<div id="q2" >
+  <h3>2. Create structure of employee which there is emp.ID, name, designation of 50 employees from user and print only name of the employee</h3>
+  <div >
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// ----------------------------------------------
+
+int verifyempid(char * empid){
+
+    if (strlen(empid)!=4) return 0;
+
+    for (int i=0 ; empid[i]!='\0' ; i++){
+        if (empid[i] &lt; 48 || empid[i] &gt; 57) return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int verifycharformat(char * name){
+    for (int i=0 ; name[i]!='\0' ; i++){
+        if (!((name[i]&gt;=65 &amp;&amp; name[i]&lt;=90) || (name[i]&gt;=97 &amp;&amp; name[i]&lt;=122) || name[i]==32))
+        return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int main(){
+    int size=10;
+    char empidv[51],namev[51],desgv[51];
+
+    struct empdata{
+        char empid[5];
+        char name[51];
+        char desg[17];
+    };  
+
+    struct empdata empdataarr[size];
+    for ( int i=0 ; i &lt; size ; i++){
+
+        printf("Enter the Records of employees :\n");
+        printf("------------------------------------\n");
+
+        printf("Record Number : %d\n",i+1);
+
+    empid:
+
+        printf("Enter the Employee ID (EEEE) :");
+        gets(empidv);   
+        fflush(stdin);
+
+        if (verifyempid(empidv)==0){
+            printf("\nEnter in a Valid Format :\n");
+            goto empid;
+        }
+        strcpy(empdataarr[i].empid, empidv);
+
+    name:
+
+        printf("Enter the Name of Employee (Format Title Case) :");
+        gets(namev);
+        fflush(stdin);
+
+        if (verifycharformat(namev)==0){
+            printf("\n Enter in valid format ! \n");
+            goto name; 
+        }
+        strcpy(empdataarr[i].name, namev);
+
+    desg:
+
+        printf("Enter the Designation (Format Title Case) :");
+        gets(desgv);
+        fflush(stdin);
+
+        if (verifycharformat(desgv)==0){
+            printf("\n Enter in valid format ! \n");
+            goto desg; 
+        }
+        strcpy(empdataarr[i].desg, desgv);
+    }
+
+    printf("\n=== Employee Records ===\n");
+    printf("\n--------------------------------\n");
+
+    printf("| %-5s | %-20s |\n", "SrNo", "Name");
+
+    for (int i=0; i&lt;size; i++){
+        printf("| %-5d | %-20s |\n", i+1, empdataarr[i].name);
+    }
+
+    printf("--------------------------------\n");
+
+    return 0;
+}</code></pre>
+  </div>
+  <div >
+    <h4>Output :</h4>
+    <pre><code>PS D:\dx\Coding\C_4205_BCA\source\12_structures&gt; gcc f2.c -o f2; .\f2
+Enter the Records of employees :
+------------------------------------
+Record Number : 1
+Enter the Employee ID (EEEE) :1111
+Enter the Name of Employee (Format Title Case) :emp one 
+Enter the Designation (Format Title Case) :a
+Enter the Records of employees :
+------------------------------------
+Record Number : 2
+Enter the Employee ID (EEEE) :2222
+Enter the Name of Employee (Format Title Case) :emp two
+Enter the Designation (Format Title Case) :b
+Enter the Records of employees :
+------------------------------------
+Record Number : 3
+Enter the Employee ID (EEEE) :3333
+Enter the Name of Employee (Format Title Case) :emp three
+Enter the Designation (Format Title Case) :c
+Enter the Records of employees :
+------------------------------------
+Record Number : 4
+Enter the Employee ID (EEEE) :4444
+Enter the Name of Employee (Format Title Case) :emp four
+Enter the Designation (Format Title Case) :d
+Enter the Records of employees :
+------------------------------------
+Record Number : 5
+Enter the Employee ID (EEEE) :5555
+Enter the Name of Employee (Format Title Case) :emp five
+Enter the Designation (Format Title Case) :e
+Enter the Records of employees :
+------------------------------------
+Record Number : 6
+Enter the Employee ID (EEEE) :6666
+Enter the Name of Employee (Format Title Case) :emmp six
+Enter the Designation (Format Title Case) :f
+Enter the Records of employees :
+------------------------------------
+Record Number : 7
+Enter the Employee ID (EEEE) :7777
+Enter the Name of Employee (Format Title Case) :emp seven
+Enter the Designation (Format Title Case) :g
+Enter the Records of employees :
+------------------------------------
+Record Number : 8
+Enter the Employee ID (EEEE) :8888
+Enter the Name of Employee (Format Title Case) :emp eight
+Enter the Designation (Format Title Case) :h
+Enter the Records of employees :
+------------------------------------
+Record Number : 9
+Enter the Employee ID (EEEE) :9999
+Enter the Name of Employee (Format Title Case) :emp nine
+Enter the Designation (Format Title Case) :o
+Enter the Records of employees :
+------------------------------------
+Record Number : 10
+Enter the Employee ID (EEEE) :0000
+Enter the Name of Employee (Format Title Case) :emp ten 
+Enter the Designation (Format Title Case) :l
+
+=== Employee Records ===
+
+--------------------------------
+| SrNo  | Name                 |
+| 1     | emp one              |
+| 2     | emp two              |
+| 3     | emp three            |
+| 4     | emp four             |
+| 5     | emp five             |
+| 6     | emmp six             |
+| 7     | emp seven            |
+| 8     | emp eight            |
+| 9     | emp nine             |
+| 10    | emp ten              |
+--------------------------------</code></pre>
+  </div>
+</div>
+
+
+<div id="q3" >
+  <h3>3. Create structure of employee which there is emp.ID, name, designation of 50 employees from user and print name character with emp.ID in tabular form ?</h3>
+  <div >
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// ----------------------------------------------
+
+int verifyempid(char * empid){
+    if (strlen(empid)!=4) return 0;
+
+    for (int i=0 ; empid[i]!='\0' ; i++){
+        if (empid[i] &lt; 48 || empid[i] &gt; 57) return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int verifycharformat(char * name){
+    for (int i=0 ; name[i]!='\0' ; i++){
+        if (!((name[i]&gt;=65 &amp;&amp; name[i]&lt;=90) || (name[i]&gt;=97 &amp;&amp; name[i]&lt;=122) || name[i]==32))
+        return 0;
+    }
+    return 1;
+}
+
+// ----------------------------------------------
+
+int main(){
+    int size=4;
+    char empidv[51],namev[51],desgv[51];
+
+    struct empdata{
+        char empid[5];
+        char name[51];
+        char desg[17];
+    };  
+
+    struct empdata empdataarr[size];
+    for ( int i=0 ; i &lt; size ; i++){
+
+        printf("Enter the Records of employees :\n");
+        printf("------------------------------------\n");
+
+        printf("Record Number : %d\n",i+1);
+
+empid:
+        printf("Enter the Employee ID (EEEE) :");
+        gets(empidv);   
+        fflush(stdin);
+
+        if (verifyempid(empidv)==0){
+            printf("\nEnter in a Valid Format :\n");
+            goto empid;
+        }
+        strcpy(empdataarr[i].empid, empidv);
+
+name:
+        printf("Enter the Name of Employee (Format Title Case) :");
+        gets(namev);
+        fflush(stdin);
+
+        if (verifycharformat(namev)==0){
+            printf("\n Enter in valid format ! \n");
+            goto name; 
+        }
+        strcpy(empdataarr[i].name, namev);
+
+desg:
+        printf("Enter the Designation (Format Title Case) :");
+        gets(desgv);
+        fflush(stdin);
+
+        if (verifycharformat(desgv)==0){
+            printf("\n Enter in valid format ! \n");
+            goto desg; 
+        }
+        strcpy(empdataarr[i].desg, desgv);
+    }
+
+    printf("\n=== Employee Records ===\n");
+    printf("\n-----------------------------------\n");
+    printf("| %-5s | %-5s | %-15s |\n", "SrNo", "EmpID", "Name First Char");
+    
+
+    for (int i=0; i&lt;size; i++){
+        printf("| %-5d | %-5s | %-15c |\n", i+1, empdataarr[i].empid, empdataarr[i].name[0]);
+    }
+
+    printf("-----------------------------------\n");
+
+    return 0;
+}</code></pre>
+  </div>
+
+  <div >
+    <h4>Output :</h4>
+    <pre><code>PS D:\dx\Coding\C_4205_BCA\source\12_structures&gt; gcc f3.c -o f3; .\f3
+Enter the Records of employees :
+------------------------------------
+Record Number : 1
+Enter the Employee ID (EEEE) :1111
+Enter the Name of Employee (Format Title Case) :emp one 
+Enter the Designation (Format Title Case) :desg one
+Enter the Records of employees :
+------------------------------------
+Record Number : 2
+Enter the Employee ID (EEEE) :2222
+Enter the Name of Employee (Format Title Case) :emp two 
+Enter the Designation (Format Title Case) :desg two 
+Enter the Records of employees :
+------------------------------------
+Record Number : 3
+Enter the Employee ID (EEEE) :3333
+Enter the Name of Employee (Format Title Case) :emp three
+Enter the Designation (Format Title Case) :desg three
+Enter the Records of employees :
+------------------------------------
+Record Number : 4
+Enter the Employee ID (EEEE) :4444
+Enter the Name of Employee (Format Title Case) :emp four   
+Enter the Designation (Format Title Case) :desg four
+
+=== Employee Records ===
+
+-----------------------------------
+| SrNo  | EmpID | Name First Char |
+| 1     | 1111  | e               |
+| 2     | 2222  | e               |
+| 3     | 3333  | e               |
+| 4     | 4444  | e               |
+-----------------------------------</code></pre>
+  </div>
+</div>
+
+
+            <div id="q4" >
+  <h3>4. Enter student details like roll name, fee, DOB and print all the detail by ascending order of roll number ?</h3>
+  <div >
+    <h4>Answer 4:</h4>
+    <pre><code>
+        
+
+
+        
+</code></pre>
+  </div>
+
+  <div >
+    <h4>Output 4:</h4>
+    <pre><code> 
+
+
+
+
+    </code></pre>
+  </div>
+</div>
+
+
+        </div>
+    </div>
+
+    <footer>
+        <p>DAISY DHIMAN BCA 4205/25 SEC A</p>
+    </footer>
+</body>
+</html>
